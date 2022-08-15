@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "jc-blocks/jc-simple-blurb",
+	"version": "0.1.0",
+	"title": "Simple Blurb",
+	"category": "text",
+	"icon": "block-default",
+	"keywords": [ "image", "text", "blurb" ],
+	"description": "A block that adds a simple blurb (short piece of text and image).",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "jc-simple-blurb",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
