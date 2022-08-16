@@ -20,7 +20,7 @@
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function jc_blocks_jc_simple_blurb_block_init() {
+function jc_blocks_simple_blurb_block_init() {
 	register_block_type( __DIR__ . '/build' );
 }
-add_action( 'init', 'jc_blocks_jc_simple_blurb_block_init' );
+add_action( 'init', 'jc_blocks_simple_blurb_block_init' );

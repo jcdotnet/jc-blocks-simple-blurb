@@ -1,14 +1,43 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
-	"name": "jc-blocks/jc-simple-blurb",
+	"name": "jc-blocks/simple-blurb",
 	"version": "0.1.0",
 	"title": "Simple Blurb",
 	"category": "text",
-	"description": "A block that adds a simple blurb (short piece of text and image).",
+	"description": "Adds a simple blurb (image + title + short piece of text).",
 	"keywords": [ "image", "text", "blurb" ],
 	"textdomain": "jc-simple-blurb",
 	"attributes": {
+		"image_id": {
+			"type": "number"
+		},
+		"image_url": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "img",
+			"attribute": "src"
+		},
+		"image_alt": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "img",
+			"attribute": "alt",
+			"default": ""
+		},
+		"width": {
+			"type": "number"
+		},
+		"height": {
+			"type": "number"
+		},
+		"image_href": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "jc-blurb-image>a",
+			"attribute": "alt",
+			"default": ""
+		},
 		"title": {
 			"type": "string",
 			"source": "html",

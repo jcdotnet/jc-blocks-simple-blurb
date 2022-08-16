@@ -8,7 +8,7 @@ import './style.scss';
 import Edit from './edit';
 import save from './save';
 
-registerBlockType('jc-blocks/jc-simple-blurb', {
+registerBlockType('jc-blocks/simple-blurb', {
 	icon,
 	edit: Edit,
 	save,

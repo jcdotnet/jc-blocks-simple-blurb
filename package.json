@@ -1,5 +1,5 @@
 {
-	"name": "jc-simple-blurb",
+	"name": "simple-blurb",
 	"version": "0.1.0",
 	"description": "Example static block scaffolded with Create Block tool.",
 	"author": "The WordPress Contributors",
@@ -15,6 +15,7 @@
 		"start": "wp-scripts start"
 	},
 	"devDependencies": {
+		"@wordpress/blob": "^3.15.0",
 		"@wordpress/icons": "^9.6.0",
 		"@wordpress/scripts": "^22.3.0"
 	}

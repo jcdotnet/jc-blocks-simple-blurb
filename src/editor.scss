@@ -4,6 +4,18 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-create-block-jc-simple-blurb {
+.wp-block-jc-blocks-simple-blurb {
 	border: 1px dotted #f00;
+	.jc-blurb-image {
+		position:relative;
+		
+		&.is-image-loading img {
+			opacity: 0.5;
+		}
+		.components-spinner {
+			position: absolute;
+			top:0;
+			left:0;
+		}
+	}
 }
