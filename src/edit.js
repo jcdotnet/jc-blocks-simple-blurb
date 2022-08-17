@@ -1,8 +1,14 @@
 /**
+ * External dependencies
+ */
+ import classnames from 'classnames';
+
+/**
  * WordPress dependencies
  */
 import { isBlobURL, revokeBlobURL } from '@wordpress/blob';
 import { 
+	AlignmentControl,
 	useBlockProps, 
 	RichText, 
 	MediaPlaceholder, 
@@ -36,7 +42,7 @@ import './editor.scss';
  const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
 
 function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we get the noticeOperations and the noticeUI props from the withNotices higher-order component
-	const {imageId, imageUrl, alt, width, height, title, content} = attributes;
+	const {imageId, imageUrl, alt, width, height, title, description, contentAlign, imageAlign} = attributes;
 
 	const [ temporaryURL, setTemporaryURL ] = useState();
 	
@@ -122,7 +128,15 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 						/>			
 					</PanelBody>
 				</InspectorControls>
-			} 
+			}
+			<BlockControls group="block">
+				<AlignmentControl
+					value={ contentAlign }
+					onChange={ ( nextAlign ) => {
+						setAttributes( { contentAlign: nextAlign } );
+					} }
+				/>
+			</BlockControls> 
 			{ imageUrl &&
 				<BlockControls group="inline">
 					<MediaReplaceFlow
@@ -139,27 +153,37 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 						icon="trash"
 						label={__('Remove Image', 'jc-simple-blurb')}
 						onClick={removeImage}
+					/>
+					<AlignmentControl
+						value={ imageAlign }
+						onChange={ ( nextAlign ) => {
+							setAttributes( { imageAlign: nextAlign } );
+						} }
 					/>	
 				</BlockControls>
 			}
 			<div {...useBlockProps()}>
-				<div className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' :''}`}>
-					{ imageUrl && <img src={imageUrl} alt={alt} style={imageStyle}/> }
-					{ isBlobURL(imageUrl) && <Spinner/> }
-					<MediaPlaceholder 
-						accept="image/*"
-						allowedTypes={ ['image'] }
-						icon={<BlockIcon icon={ icon }/>} 
-						onSelect={onImageSelect} 
-						onSelectURL={(url) => {setAttributes({imageId: undefined, imageUrl: url, alt: ''})}}
-						onError={onUploadError}
-						disableMediaButtons={ imageUrl }
-						notices={ noticeUI }
-					/>
-				</div>
-				<div className="jc-blurb-content">
-					<RichText ref={titleRef} placeholder={__('Blurb Title', 'jc-simple-blurb')} tagName="h4" onChange={onTitleChange} value={title}/>
-					<RichText placeholder={__('Blurb Content', 'jc-simple-blurb')} tagName="p" onChange={onContentChange} value={content}/>
+				<div className={classnames( 'jc-blurb-content', {[ `has-content-align-${ contentAlign }` ]: contentAlign}, {[ `has-text-align-${ imageAlign }` ]: imageAlign})}>
+					<div className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' :''}`}>
+						{ imageUrl && <img src={imageUrl} alt={alt} style={imageStyle}/> }
+						{ isBlobURL(imageUrl) && <Spinner/> }
+						<MediaPlaceholder 
+							accept="image/*"
+							allowedTypes={ ['image'] }
+							icon={<BlockIcon icon={ icon }/>} 
+							onSelect={onImageSelect} 
+							onSelectURL={(url) => {setAttributes({imageId: undefined, imageUrl: url, alt: ''})}}
+							onError={onUploadError}
+							disableMediaButtons={ imageUrl }
+							notices={ noticeUI }
+						/>
+					</div>
+					<div className="jc-blurb-info">
+						<RichText className="jc-blurb-title" ref={titleRef} placeholder={__('Blurb Title', 'jc-simple-blurb')} tagName="h4" onChange={onTitleChange} value={title}/>
+						<div className="jc-blurb-description">	
+							<RichText placeholder={__('Blurb Content', 'jc-simple-blurb')} tagName="p" onChange={onContentChange} value={description}/>
+						</div>
+					</div>
 				</div>
 			</div>
 		</>

@@ -43,10 +43,16 @@
 			"source": "html",
 			"selector": "h4"
 		},
-		"content": {
+		"description": {
 			"type": "string",
 			"source": "html",
 			"selector": "p"
+		},
+		"contentAlign": {
+			"type": "string"
+		},
+		"imageAlign": {
+			"type": "string"
 		}
 	},
 	"supports": {

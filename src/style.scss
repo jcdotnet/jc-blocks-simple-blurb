@@ -9,4 +9,19 @@
 	background-color: #21759b;
 	color: #fff;
 	padding: 2px;
+	.jc-blurb-content {
+		max-width:550px;
+		margin:0 auto;
+		&.has-content-align-left {
+			margin-right:auto;
+			margin-left:0;
+		}
+		&.has-content-align-right {
+			margin-right:0;
+			margin-left:auto;
+		}
+		.jc-blurb-info {
+			text-align: left;
+		}
+	}
 }
