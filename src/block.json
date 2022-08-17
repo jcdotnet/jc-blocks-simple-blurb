@@ -9,16 +9,16 @@
 	"keywords": [ "image", "text", "blurb" ],
 	"textdomain": "jc-simple-blurb",
 	"attributes": {
-		"image_id": {
+		"imageId": {
 			"type": "number"
 		},
-		"image_url": {
+		"imageUrl": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "img",
 			"attribute": "src"
 		},
-		"image_alt": {
+		"alt": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "img",
@@ -31,7 +31,7 @@
 		"height": {
 			"type": "number"
 		},
-		"image_href": {
+		"href": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "jc-blurb-image>a",

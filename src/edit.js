@@ -14,9 +14,9 @@ import {
 } from '@wordpress/block-editor';
 import { Spinner, withNotices, ToolbarButton, PanelBody, TextareaControl, ExternalLink } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { image as icon, wordpress } from '@wordpress/icons';
+import { image as icon } from '@wordpress/icons';
 
 
 /**
@@ -36,21 +36,22 @@ import './editor.scss';
  const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
 
 function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we get the noticeOperations and the noticeUI props from the withNotices higher-order component
-	const {image_id, image_url, image_alt, width, height, title, content} = attributes;
+	const {imageId, imageUrl, alt, width, height, title, content} = attributes;
 
 	const [ temporaryURL, setTemporaryURL ] = useState();
 	
 	const image = useSelect((select) => {
 		const { getMedia } = select( 'core' );
-		return image_id ? getMedia(image_id) : null;
-	}, [image_id]);
+		return imageId ? getMedia(imageId) : null;
+	}, [imageId]);
 
 	const imageStyle= {
 		width, height
 	}
+	const titleRef = useRef();
 
 	const onAltChange = (alt) => {
-		setAttributes({image_alt: alt})
+		setAttributes({alt: alt})
 	}
 	
 	const onImageSelect = (media) => {
@@ -58,7 +59,7 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 			removeImage();
 			return;
 		}
-		setAttributes({image_id: media.id, image_url: media.url, image_alt: media.alt});
+		setAttributes({imageId: media.id, imageUrl: media.url, alt: media.alt});
 	}
 	const onTitleChange = (newTitle) => {
 		setAttributes({title: newTitle});
@@ -73,29 +74,31 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 
 	const removeImage = () => {
 		setAttributes( {
-			image_id: undefined,
-			image_url: undefined,
-			image_alt: '',
+			imageId: undefined,
+			imageUrl: undefined,
+			alt: '',
 		} );
 	}
 	
 	useEffect( () => {
-		if ( isTemporaryImage(image_id, image_url) ) {
+		if ( isTemporaryImage(imageId, imageUrl) ) {
 			removeImage();
-			setTemporaryURL( image_url );
+			setTemporaryURL( imageUrl );
 			return;
-		} 
+		} else {
+			titleRef.current.focus();
+		}
 		revokeBlobURL( temporaryURL );
-	}, [ image_url ] );
+	}, [ imageUrl ] );
 
 	return (
 		<>
-			{ image_url && !isBlobURL(image_url) &&
+			{ imageUrl && !isBlobURL(imageUrl) &&
 				<InspectorControls>
 					<PanelBody title={__('Image Settings')}>		
 						<TextareaControl
 							label={__('Alt text (alternative text)')}
-							value={image_alt}
+							value={alt}
 							onChange={onAltChange}
 							help={
 								<>
@@ -120,16 +123,16 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 					</PanelBody>
 				</InspectorControls>
 			} 
-			{ image_url &&
+			{ imageUrl &&
 				<BlockControls group="inline">
 					<MediaReplaceFlow
 						name={__('Replace Image', 'jc-simple-blurb')}
-						mediaId={image_id}
-						mediaUrl={image_url}
+						mediaId={imageId}
+						mediaUrl={imageUrl}
 						accept="image/*"
 						allowedTypes={ ['image'] }
 						onSelect={onImageSelect} 
-						onSelectURL={(url) => {setAttributes({image_id: undefined, image_url: url, image_alt: ''})}}
+						onSelectURL={(url) => {setAttributes({imageId: undefined, imageUrl: url, alt: ''})}}
 						onError={onUploadError}
 					/>
 					<ToolbarButton 
@@ -140,22 +143,22 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 				</BlockControls>
 			}
 			<div {...useBlockProps()}>
-				<div className={`jc-blurb-image${isBlobURL(image_url) ? ' is-image-loading' :''}`}>
-					{ image_url && <img src={image_url} alt={image_alt} style={imageStyle}/> }
-					{ isBlobURL(image_url) && <Spinner/> }
+				<div className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' :''}`}>
+					{ imageUrl && <img src={imageUrl} alt={alt} style={imageStyle}/> }
+					{ isBlobURL(imageUrl) && <Spinner/> }
 					<MediaPlaceholder 
 						accept="image/*"
 						allowedTypes={ ['image'] }
 						icon={<BlockIcon icon={ icon }/>} 
 						onSelect={onImageSelect} 
-						onSelectURL={(url) => {setAttributes({image_id: undefined, image_url: url, image_alt: ''})}}
+						onSelectURL={(url) => {setAttributes({imageId: undefined, imageUrl: url, alt: ''})}}
 						onError={onUploadError}
-						disableMediaButtons={ image_url }
+						disableMediaButtons={ imageUrl }
 						notices={ noticeUI }
 					/>
 				</div>
 				<div className="jc-blurb-content">
-					<RichText placeholder={__('Blurb Title', 'jc-simple-blurb')} tagName="h4" onChange={onTitleChange} value={title}/>
+					<RichText ref={titleRef} placeholder={__('Blurb Title', 'jc-simple-blurb')} tagName="h4" onChange={onTitleChange} value={title}/>
 					<RichText placeholder={__('Blurb Content', 'jc-simple-blurb')} tagName="p" onChange={onContentChange} value={content}/>
 				</div>
 			</div>
