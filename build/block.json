@@ -45,6 +45,10 @@
 		"imageAlign": {
 			"type": "string",
 			"default": "center"
+		},
+		"allowBlocks": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {

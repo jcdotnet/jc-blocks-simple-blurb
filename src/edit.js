@@ -18,7 +18,7 @@ import {
 	InspectorControls, 
 	__experimentalImageSizeControl as ImageSizeControl 
 } from '@wordpress/block-editor';
-import { Spinner, withNotices, ToolbarButton, PanelBody, TextareaControl, ExternalLink } from '@wordpress/components';
+import { Spinner, withNotices, ToolbarButton, PanelBody, TextareaControl, ExternalLink, ToggleControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -42,7 +42,7 @@ import './editor.scss';
  const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
 
 function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we get the noticeOperations and the noticeUI props from the withNotices higher-order component
-	const {imageId, imageUrl, alt, width, height, contentAlign, imageAlign} = attributes;
+	const {imageId, imageUrl, alt, width, height, contentAlign, imageAlign, allowBlocks } = attributes;
 
 	const [ temporaryURL, setTemporaryURL ] = useState();
 	
@@ -58,6 +58,10 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 
 	const onAltChange = (alt) => {
 		setAttributes({alt: alt})
+	}
+
+	function onAllowBlocksChange() {
+		setAttributes( { allowBlocks: ! allowBlocks } );
 	}
 	
 	const onImageSelect = (media) => {
@@ -93,8 +97,15 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 
 	return (
 		<>
-			{ imageUrl && !isBlobURL(imageUrl) &&
-				<InspectorControls>
+			<InspectorControls>					
+				<PanelBody title={ __( 'Blurb Settings' ) }>
+					<ToggleControl
+						label={ __( 'Allow inserting new blocks' ) }
+						checked={ !! allowBlocks }
+						onChange={ onAllowBlocksChange }
+					/>
+				</PanelBody>
+				{ imageUrl && !isBlobURL(imageUrl) &&
 					<PanelBody title={__('Image Settings')}>		
 						<TextareaControl
 							label={__('Alt text (alternative text)')}
@@ -121,8 +132,9 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 							imageHeight={ (image && image.media_details && image.media_details.height) || undefined }
 						/>			
 					</PanelBody>
-				</InspectorControls>
-			}
+				}
+			</InspectorControls>
+		
 			<BlockControls group="block">
 				<AlignmentControl
 					value={ contentAlign }
@@ -174,6 +186,7 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 					</div>
 					<div className="jc-blurb-info" ref={infoRef}>
 						<InnerBlocks
+							templateLock ={ allowBlocks ? false : 'all' }
 							template ={ [
 								['core/heading', {
 									className:"jc-blurb-title",
