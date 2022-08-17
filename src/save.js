@@ -1,9 +1,9 @@
 import classnames from 'classnames';
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 export default function save({attributes}) {
-	const {imageId, imageUrl, alt, width, height, title, description, contentAlign, imageAlign} = attributes;
+	const {imageId, imageUrl, alt, width, height, contentAlign, imageAlign} = attributes;
 
 	return (
 		<div {...useBlockProps.save()}>
@@ -12,10 +12,7 @@ export default function save({attributes}) {
 					{ imageUrl && <img width={width} height={height} src={imageUrl} alt={alt} className={ imageId ? `wp-image-${ imageId }` : '' } /> }
 				</div>
 				<div className="jc-blurb-info">
-					<RichText.Content className="jc-blurb-title" tagName="h4" value={title} />
-					<div className="jc-blurb-description">
-						<RichText.Content tagName="p" value={description} />
-					</div>
+					<InnerBlocks.Content/>
 				</div>
 			</div>
 		</div>

@@ -38,24 +38,17 @@
 			"attribute": "alt",
 			"default": ""
 		},
-		"title": {
-			"type": "string",
-			"source": "html",
-			"selector": "h4"
-		},
-		"description": {
-			"type": "string",
-			"source": "html",
-			"selector": "p"
-		},
 		"contentAlign": {
-			"type": "string"
+			"type": "string",
+			"default": "center"
 		},
 		"imageAlign": {
-			"type": "string"
+			"type": "string",
+			"default": "center"
 		}
 	},
 	"supports": {
+		"align": ["wide"],
 		"html": false
 	},
 	"editorScript": "file:./index.js",

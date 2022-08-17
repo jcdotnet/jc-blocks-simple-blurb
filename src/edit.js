@@ -8,9 +8,9 @@
  */
 import { isBlobURL, revokeBlobURL } from '@wordpress/blob';
 import { 
+	InnerBlocks,
 	AlignmentControl,
-	useBlockProps, 
-	RichText, 
+	useBlockProps,
 	MediaPlaceholder, 
 	BlockIcon, 
 	BlockControls, 
@@ -42,7 +42,7 @@ import './editor.scss';
  const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
 
 function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we get the noticeOperations and the noticeUI props from the withNotices higher-order component
-	const {imageId, imageUrl, alt, width, height, title, description, contentAlign, imageAlign} = attributes;
+	const {imageId, imageUrl, alt, width, height, contentAlign, imageAlign} = attributes;
 
 	const [ temporaryURL, setTemporaryURL ] = useState();
 	
@@ -54,7 +54,7 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 	const imageStyle= {
 		width, height
 	}
-	const titleRef = useRef();
+	const infoRef = useRef();
 
 	const onAltChange = (alt) => {
 		setAttributes({alt: alt})
@@ -67,12 +67,7 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 		}
 		setAttributes({imageId: media.id, imageUrl: media.url, alt: media.alt});
 	}
-	const onTitleChange = (newTitle) => {
-		setAttributes({title: newTitle});
-	}
-	const onContentChange = (newContent) => {
-		setAttributes({content: newContent});
-	}
+
 	const onUploadError = ( message ) => {
 		noticeOperations.removeAllNotices();
 		noticeOperations.createErrorNotice( message );
@@ -91,9 +86,8 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 			removeImage();
 			setTemporaryURL( imageUrl );
 			return;
-		} else {
-			titleRef.current.focus();
-		}
+		} else if (imageUrl) infoRef.current.getElementsByClassName('jc-blurb-title')[0].focus();
+		
 		revokeBlobURL( temporaryURL );
 	}, [ imageUrl ] );
 
@@ -178,11 +172,20 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 							notices={ noticeUI }
 						/>
 					</div>
-					<div className="jc-blurb-info">
-						<RichText className="jc-blurb-title" ref={titleRef} placeholder={__('Blurb Title', 'jc-simple-blurb')} tagName="h4" onChange={onTitleChange} value={title}/>
-						<div className="jc-blurb-description">	
-							<RichText placeholder={__('Blurb Content', 'jc-simple-blurb')} tagName="p" onChange={onContentChange} value={description}/>
-						</div>
+					<div className="jc-blurb-info" ref={infoRef}>
+						<InnerBlocks
+							template ={ [
+								['core/heading', {
+									className:"jc-blurb-title",
+									level: 4,
+									placeholder: __('Blurb Title', 'jc-simple-blurb')
+									}],
+								['core/paragraph', {
+									className:"jc-blurb-description",
+									placeholder: __('Blurb Content', 'jc-simple-blurb')
+								}]
+							] }
+						/>
 					</div>
 				</div>
 			</div>
