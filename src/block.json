@@ -53,6 +53,14 @@
 	},
 	"supports": {
 		"align": ["wide"],
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
 		"html": false
 	},
 	"editorScript": "file:./index.js",

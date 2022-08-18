@@ -16,7 +16,8 @@ import {
 	BlockControls, 
 	MediaReplaceFlow, 
 	InspectorControls, 
-	__experimentalImageSizeControl as ImageSizeControl 
+	__experimentalImageSizeControl as ImageSizeControl,
+	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
 import { Spinner, withNotices, ToolbarButton, PanelBody, TextareaControl, ExternalLink, ToggleControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
@@ -169,7 +170,8 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 				</BlockControls>
 			}
 			<div {...useBlockProps()}>
-				<div className={classnames( 'jc-blurb-content', {[ `has-content-align-${ contentAlign }` ]: contentAlign}, {[ `has-text-align-${ imageAlign }` ]: imageAlign})}>
+				<div className={classnames( 'jc-blurb-content', {[ `has-content-align-${ contentAlign }` ]: contentAlign}, {[ `has-text-align-${ imageAlign }` ]: imageAlign}, useColorProps( attributes ).className)}
+					style={ useColorProps( attributes ).style } >
 					<div className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' :''}`}>
 						{ imageUrl && <img src={imageUrl} alt={alt} style={imageStyle}/> }
 						{ isBlobURL(imageUrl) && <Spinner/> }
@@ -186,6 +188,7 @@ function Edit({attributes, setAttributes, noticeOperations, noticeUI}) { // we g
 					</div>
 					<div className="jc-blurb-info" ref={infoRef}>
 						<InnerBlocks
+							allowedBlocks={ ['core/paragraph', 'core/list'] } 
 							templateLock ={ allowBlocks ? false : 'all' }
 							template ={ [
 								['core/heading', {
