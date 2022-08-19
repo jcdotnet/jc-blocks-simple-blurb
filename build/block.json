@@ -58,7 +58,7 @@
 			"gradients": true,
 			"__experimentalDefaultControls": {
 				"background": true,
-				"text": true
+				"text": false
 			}
 		},
 		"html": false
