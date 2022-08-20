@@ -3,7 +3,7 @@ import { useBlockProps, InnerBlocks, __experimentalGetColorClassesAndStyles as g
 import { __ } from '@wordpress/i18n';
 
 export default function save({attributes}) {
-	const {imageId, imageUrl, alt, width, height, imageAlign, maxWidth} = attributes;
+	const {imageId, imageUrl, alt, width, height, imageAlign, imageHasEffect, maxWidth} = attributes;
  
     const blockProps = useBlockProps.save({
         className: classnames( 'jc-blurb-content', {[ `has-text-align-${ imageAlign }` ]: imageAlign}, getColorClassesAndStyles( attributes ).className),
@@ -12,7 +12,7 @@ export default function save({attributes}) {
 
 	return (
 		<div {...blockProps}>
-            <div className="jc-blurb-image">
+            <div className={`jc-blurb-image${imageHasEffect ? ' jc-effect' : ''}`}>
                 { imageUrl && <img width={width} height={height} src={imageUrl} alt={alt} className={ imageId ? `wp-image-${ imageId }` : '' } /> }
             </div>
             <div className="jc-blurb-info">

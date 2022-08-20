@@ -1,0 +1,1 @@
+jQuery((function(o){const t=o(".jc-effect"),s=()=>{const s=o(window).scrollTop(),i=o(window).scrollTop()+o(window).height();t.each((function(){o(this).offset().top>=s&&o(this).offset().top<i&&o(this).addClass("jc-animate")}))};o(window).on("scroll resize",s),s()}));

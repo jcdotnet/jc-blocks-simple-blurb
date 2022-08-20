@@ -20,8 +20,14 @@
 			margin-right:0;
 			margin-left:auto;
 		}
+		.jc-blurb-image.jc-effect.jc-animate {
+			animation: fadeTop 1s cubic-bezier(.77,0,.175,1) 1;
+		}
 		.jc-blurb-info {
 			text-align: left;
 		}
 	}
 }
+
+@keyframes fadeTop {0% {transform: translate3d(0,-100%,0);}
+	to {opacity: 1;transform: none;}}

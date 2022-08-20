@@ -38,6 +38,10 @@ registerBlockType('jc-blocks/blurb-content', {
 			type: 'string',
 			default: 'center'
 		},
+        imageHasEffect: {
+            type: 'bool',
+            default: false
+        },
         maxWidth: {
             type: 'string',
         },
@@ -45,7 +49,7 @@ registerBlockType('jc-blocks/blurb-content', {
             type: 'boolean',
             default: false
         }
-        
+
     },
     supports: {
         reusable: false,

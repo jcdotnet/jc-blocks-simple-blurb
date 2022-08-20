@@ -38,7 +38,7 @@ const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
 
 function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // we get the noticeOperations and the noticeUI props from the withNotices higher-order component
 
-    const {imageId, imageUrl, alt, width, height, imageAlign, maxWidth, allowBlocks } = attributes;
+    const {imageId, imageUrl, alt, width, height, imageAlign, imageHasEffect, maxWidth, allowBlocks } = attributes;
 
     // BLURB content (main element)
     const classes = classnames( 'jc-blurb-content', {
@@ -57,12 +57,12 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // 
 		{ value: 'vw', label: 'em', default: 0 },
     ];
 
-    // BLURB info (title & description)
-    const infoRef = useRef();
-
 	function onAllowBlocksChange() {
 		setAttributes( { allowBlocks: ! allowBlocks } );
 	}
+
+    // BLURB info (title & description)
+    const infoRef = useRef();
 
     // BLURB image
     const [ temporaryURL, setTemporaryURL ] = useState();
@@ -78,6 +78,10 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // 
 
 	const onAltChange = (alt) => {
 		setAttributes({alt: alt})
+	}
+
+	const onImageHasEffectChange = () => {
+		setAttributes( { imageHasEffect: ! imageHasEffect } );
 	}
 	
 	const onImageSelect = (media) => {
@@ -134,6 +138,11 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // 
 				</PanelBody>
 				{ imageUrl && !isBlobURL(imageUrl) &&
 					<PanelBody title={__('Image Settings')}>		
+						<ToggleControl
+							label={ __( 'Image Effect' ) }
+							checked={ !! imageHasEffect }
+							onChange={ onImageHasEffectChange }
+						/>
 						<TextareaControl
 							label={__('Alt text (alternative text)')}
 							value={alt}
@@ -188,7 +197,7 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // 
 				</BlockControls>
 			}
 			<div {...blockProps}>
-                <div className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' :''}`}>
+                <div className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' : ''}${imageHasEffect ? ' jc-effect' : ''}`}>
                     { imageUrl && <img src={imageUrl} alt={alt} style={imageStyle}/> }
                     { isBlobURL(imageUrl) && <Spinner/> }
                     <MediaPlaceholder 
