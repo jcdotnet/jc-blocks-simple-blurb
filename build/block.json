@@ -4,53 +4,10 @@
 	"name": "jc-blocks/simple-blurb",
 	"version": "0.1.0",
 	"title": "Simple Blurb",
-	"category": "text",
-	"description": "Adds a simple blurb (image + title + short piece of text).",
+	"category": "media",
+	"description": "Adds a simple blurb (image, title and short piece of text).",
 	"keywords": [ "image", "text", "blurb" ],
 	"textdomain": "jc-simple-blurb",
-	"attributes": {
-		"imageId": {
-			"type": "number"
-		},
-		"imageUrl": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "img",
-			"attribute": "src"
-		},
-		"alt": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "img",
-			"attribute": "alt",
-			"default": ""
-		},
-		"width": {
-			"type": "number"
-		},
-		"height": {
-			"type": "number"
-		},
-		"href": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "jc-blurb-image>a",
-			"attribute": "alt",
-			"default": ""
-		},
-		"contentAlign": {
-			"type": "string",
-			"default": "center"
-		},
-		"imageAlign": {
-			"type": "string",
-			"default": "center"
-		},
-		"allowBlocks": {
-			"type": "boolean",
-			"default": false
-		}
-	},
 	"supports": {
 		"align": ["wide"],
 		"color": {
@@ -58,7 +15,7 @@
 			"gradients": true,
 			"__experimentalDefaultControls": {
 				"background": true,
-				"text": false
+				"text": true
 			}
 		},
 		"html": false

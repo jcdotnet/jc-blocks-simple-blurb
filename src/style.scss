@@ -10,11 +10,13 @@
 	.jc-blurb-content {
 		max-width:550px;
 		margin:0 auto;
-		&.has-content-align-left {
+		&.alignleft {
+			float: none;
 			margin-right:auto;
 			margin-left:0;
 		}
-		&.has-content-align-right {
+		&.alignright {
+			float:none;
 			margin-right:0;
 			margin-left:auto;
 		}

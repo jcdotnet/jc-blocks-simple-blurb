@@ -5,6 +5,7 @@ import './style.scss';
 /**
  * Internal dependencies
  */
+import './blurb-content';
 import Edit from './edit';
 import save from './save';
 
