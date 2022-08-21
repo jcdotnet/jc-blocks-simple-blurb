@@ -18,6 +18,10 @@
 				"text": true
 			}
 		},
+		"spacing": {
+			"padding": true,
+			"margin": true
+		},
 		"html": false
 	},
 	"editorScript": "file:./index.js",

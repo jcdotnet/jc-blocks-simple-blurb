@@ -197,7 +197,7 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // 
 				</BlockControls>
 			}
 			<div {...blockProps}>
-                <div className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' : ''}${imageHasEffect ? ' jc-effect' : ''}`}>
+                <div className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' : ''}`}>
                     { imageUrl && <img src={imageUrl} alt={alt} style={imageStyle}/> }
                     { isBlobURL(imageUrl) && <Spinner/> }
                     <MediaPlaceholder 

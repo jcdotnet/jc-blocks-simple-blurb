@@ -20,14 +20,30 @@
 			margin-right:0;
 			margin-left:auto;
 		}
-		.jc-blurb-image.jc-effect.jc-animate {
-			animation: fadeTop 1s cubic-bezier(.77,0,.175,1) 1;
+		.jc-blurb-image {
+			margin-bottom: 30px;
+		}
+		.jc-blurb-image.jc-effect {
+			opacity: 0;
+			&.jc-animate {
+				animation: fadeTop ease-out;
+			}
+			&.jc-animated {
+				opacity: 1;
+			}
 		}
 		.jc-blurb-info {
 			text-align: left;
+			.jc-blurb-title {
+				margin: 0;
+				padding-bottom:10px;
+			}
+			.jc-blurb-description {
+				margin: 0;
+			}
 		}
 	}
 }
 
-@keyframes fadeTop {0% {transform: translate3d(0,-100%,0);}
-	to {opacity: 1;transform: none;}}
+@keyframes fadeTop {0% {transform: translate3d(0,-25%,0);} 
+	to {opacity:1; transform: none;}}

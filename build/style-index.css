@@ -1,1 +1,71 @@
-.wp-block-jc-blocks-simple-blurb{margin-bottom:1em}.wp-block-jc-blocks-simple-blurb .jc-blurb-content{margin:0 auto;max-width:550px}.wp-block-jc-blocks-simple-blurb .jc-blurb-content.alignleft{float:none;margin-left:0;margin-right:auto}.wp-block-jc-blocks-simple-blurb .jc-blurb-content.alignright{float:none;margin-left:auto;margin-right:0}.wp-block-jc-blocks-simple-blurb .jc-blurb-content .jc-blurb-image.jc-effect.jc-animate{-webkit-animation:fadeTop 1s cubic-bezier(.77,0,.175,1) 1;animation:fadeTop 1s cubic-bezier(.77,0,.175,1) 1}.wp-block-jc-blocks-simple-blurb .jc-blurb-content .jc-blurb-info{text-align:left}@-webkit-keyframes fadeTop{0%{transform:translate3d(0,-100%,0)}to{opacity:1;transform:none}}@keyframes fadeTop{0%{transform:translate3d(0,-100%,0)}to{opacity:1;transform:none}}
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/style.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-jc-blocks-simple-blurb {
+  margin-bottom: 1em;
+}
+.wp-block-jc-blocks-simple-blurb .jc-blurb-content {
+  max-width: 550px;
+  margin: 0 auto;
+}
+.wp-block-jc-blocks-simple-blurb .jc-blurb-content.alignleft {
+  float: none;
+  margin-right: auto;
+  margin-left: 0;
+}
+.wp-block-jc-blocks-simple-blurb .jc-blurb-content.alignright {
+  float: none;
+  margin-right: 0;
+  margin-left: auto;
+}
+.wp-block-jc-blocks-simple-blurb .jc-blurb-content .jc-blurb-image {
+  margin-bottom: 30px;
+}
+.wp-block-jc-blocks-simple-blurb .jc-blurb-content .jc-blurb-image.jc-effect {
+  opacity: 0;
+}
+.wp-block-jc-blocks-simple-blurb .jc-blurb-content .jc-blurb-image.jc-effect.jc-animate {
+  -webkit-animation: fadeTop ease-out;
+          animation: fadeTop ease-out;
+}
+.wp-block-jc-blocks-simple-blurb .jc-blurb-content .jc-blurb-image.jc-effect.jc-animated {
+  opacity: 1;
+}
+.wp-block-jc-blocks-simple-blurb .jc-blurb-content .jc-blurb-info {
+  text-align: left;
+}
+.wp-block-jc-blocks-simple-blurb .jc-blurb-content .jc-blurb-info .jc-blurb-title {
+  margin: 0;
+  padding-bottom: 10px;
+}
+.wp-block-jc-blocks-simple-blurb .jc-blurb-content .jc-blurb-info .jc-blurb-description {
+  margin: 0;
+}
+
+@-webkit-keyframes fadeTop {
+  0% {
+    transform: translate3d(0, -25%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeTop {
+  0% {
+    transform: translate3d(0, -25%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*# sourceMappingURL=style-index.css.map*/

@@ -62,6 +62,10 @@ registerBlockType('jc-blocks/blurb-content', {
 				background: true,
 				text: true
 			}
+		},
+		spacing: {
+			padding: true,
+			margin: true
 		}
     },
 	edit: Edit,
