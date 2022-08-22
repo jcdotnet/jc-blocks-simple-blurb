@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Simple Blurb for Gutenberg
- * Description:       Gutenberg block that displays an image and a short piece of information (title and text).
+ * Description:       Adds a Gutenberg block that showcases a short piece of information (image, title and description).
  * Requires at least: 5.8
  * Requires PHP:      7.0
  * Version:           0.1.0

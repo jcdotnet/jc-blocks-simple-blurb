@@ -5,7 +5,7 @@
 	"version": "0.1.0",
 	"title": "Simple Blurb",
 	"category": "media",
-	"description": "Adds a simple blurb (image, title and short piece of text).",
+	"description": "Add a simple blurb to showcase a short piece of information.",
 	"keywords": [ "image", "text", "blurb" ],
 	"textdomain": "jc-simple-blurb",
 	"supports": {

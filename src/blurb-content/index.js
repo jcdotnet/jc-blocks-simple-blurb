@@ -6,11 +6,13 @@ import { __ } from '@wordpress/i18n';
  */
 import Edit from './edit';
 import Save from './save';
+import icon from './icon';
 
 registerBlockType('jc-blocks/blurb-content', {
     title: 'Blurb Content',
+	description: __('Add the blurb image, title and description', 'jc-simple-blurb'),
     parent: [ 'jc-blocks/simple-blurb' ],
-    attributes: {
+	attributes: {
         imageId: {
 			type: 'number',
 		},
@@ -70,4 +72,5 @@ registerBlockType('jc-blocks/blurb-content', {
     },
 	edit: Edit,
 	save: Save,
+	icon
 });
