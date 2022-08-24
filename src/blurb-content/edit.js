@@ -15,15 +15,26 @@ import {
 	BlockIcon, 
 	BlockControls, 
 	MediaReplaceFlow, 
-	InspectorControls, 
+	InspectorControls,
 	__experimentalImageSizeControl as ImageSizeControl,
+	__experimentalLinkControl as LinkControl,
 	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
-import { Spinner, withNotices, ToolbarButton, PanelBody, TextareaControl, ExternalLink, ToggleControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
+import { 
+	Spinner, 
+	withNotices, 
+	ToolbarButton, 
+	Popover, 
+	PanelBody, 
+	TextareaControl, 
+	ExternalLink, 
+	ToggleControl, 
+	TextControl,
+	__experimentalUnitControl as UnitControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { image as icon } from '@wordpress/icons';
+import { link as linkIcon, linkOff, image as icon } from '@wordpress/icons';
 
 /**
  * Is the URL a temporary blob URL? A blob URL is one that is used temporarily
@@ -36,9 +47,9 @@ import { image as icon } from '@wordpress/icons';
  */
 const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
 
-function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // we get the noticeOperations and the noticeUI props from the withNotices higher-order component
+function Edit( { attributes, setAttributes, isSelected, noticeOperations, noticeUI } ) { // we get the noticeOperations and the noticeUI props from the withNotices higher-order component
 
-    const {imageId, imageUrl, alt, width, height, imageAlign, imageHasEffect, maxWidth, allowBlocks } = attributes;
+    const {imageId, imageUrl, alt, link, linkTarget, linkRel, width, height, imageAlign, imageHasEffect, maxWidth, allowBlocks } = attributes;
 
     // BLURB content (main element)
     const classes = classnames( 'jc-blurb-content', {
@@ -61,21 +72,16 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // 
 		setAttributes( { allowBlocks: ! allowBlocks } );
 	}
 
-    // BLURB info (title & description)
-    const infoRef = useRef();
-
-    // BLURB image
+    // BLURB image (source)
     const [ temporaryURL, setTemporaryURL ] = useState();
-	
+
 	const image = useSelect((select) => {
 		const { getMedia } = select( 'core' );
 		return imageId ? getMedia(imageId) : null;
 	}, [imageId]);
 
-	const imageStyle= {
-		width, height
-	}
-
+	const imageRef = useRef();
+	
 	const onAltChange = (alt) => {
 		setAttributes({alt: alt})
 	}
@@ -104,16 +110,46 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // 
 			alt: '',
 		} );
 	}
-	
+
 	useEffect( () => {
 		if ( isTemporaryImage(imageId, imageUrl) ) {
 			removeImage();
 			setTemporaryURL( imageUrl );
 			return;
-		} else if (imageUrl) infoRef.current.getElementsByClassName('jc-blurb-title')[0].focus();
+		} else if (imageUrl) imageRef.current?.focus();
 		
 		revokeBlobURL( temporaryURL );
 	}, [ imageUrl ] );
+
+	// BLURB image (link)
+	const [ isEditingLink, setIsEditingLink ] = useState( false );	
+	const opensInNewTab = linkTarget === '_blank'
+
+	useEffect( () => {
+		if ( ! isSelected ) {
+			setIsEditingLink( false );
+		}
+	}, [ isSelected ] );
+
+	const startLinkEditing = (event) => {
+		event.preventDefault();
+		setIsEditingLink( true );
+	}
+
+	const unlink = () => {
+		setAttributes( {
+			link: undefined,
+			linkTarget: undefined,
+			linkRel: undefined,
+		} );
+		setIsEditingLink( false );
+	}
+
+	// BLURB output
+	const imageStyle= {
+		width, height
+	}
+	const imageOutput = <img ref={imageRef} src={imageUrl} alt={alt} style={imageStyle}/>;
 
     return (
 		<>
@@ -170,8 +206,16 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // 
 					</PanelBody>
 				}
 			</InspectorControls>
-		
-			{ imageUrl &&
+			{ imageUrl && !isBlobURL(imageUrl) && link &&
+				<InspectorControls __experimentalGroup="advanced">
+					<TextControl
+						label={ __( 'Link rel' ) }
+						value={ linkRel || '' }
+						onChange={ ( value ) => setAttributes( { linkRel: value } ) }
+					/>
+				</InspectorControls>
+			}
+			{ imageUrl && 
 				<BlockControls group="inline">
 					<MediaReplaceFlow
 						name={__('Replace Image', 'jc-simple-blurb')}
@@ -183,22 +227,63 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // 
 						onSelectURL={(url) => {setAttributes({imageId: undefined, imageUrl: url, alt: ''})}}
 						onError={onUploadError}
 					/>
-					<ToolbarButton 
-						icon="trash"
-						label={__('Remove Image', 'jc-simple-blurb')}
-						onClick={removeImage}
-					/>
 					<AlignmentControl
 						value={ imageAlign }
 						onChange={ ( nextAlign ) => {
 							setAttributes( { imageAlign: nextAlign } );
 						} }
-					/>	
+					/>
+					{ ! link && (
+						<ToolbarButton
+							name="link"
+							icon={ linkIcon }
+							title={ __( 'Link' ) }
+							//shortcut={ displayShortcut.primary( 'k' ) }
+							onClick={ startLinkEditing }
+						/>
+					) }
+					{ link && (
+						<ToolbarButton
+							name="link"
+							icon={ linkOff }
+							title={ __( 'Unlink' ) }
+							//shortcut={ displayShortcut.primaryShift( 'k' ) }
+							onClick={ unlink }
+							isActive={ true }
+						/>
+					) }
+					<ToolbarButton 
+						icon="trash"
+						label={__('Remove Image', 'jc-simple-blurb')}
+						onClick={removeImage}
+					/>
 				</BlockControls>
+			}
+			{ isSelected && imageUrl && ( link || isEditingLink ) &&
+				<Popover
+					position="bottom center"
+					onClose={ () => {
+						setIsEditingLink( false );
+						imageRef.current?.focus();
+					}}
+					anchorRef={ imageRef?.current }
+				>
+					<LinkControl
+							className="wp-block-navigation-link__inline-link-input"
+							value={ { url:link, opensInNewTab } }
+							onChange={ (value) => setAttributes({link:value.url, linkTarget: value.opensInNewTab ? '_blank' : undefined }) }
+							onRemove={ () => {
+								unlink();
+								imageRef.current?.focus();
+							} }
+							forceIsEditingLink={ isEditingLink }
+						/>
+				</Popover>
 			}
 			<div {...blockProps}>
                 <div className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' : ''}`}>
-                    { imageUrl && <img src={imageUrl} alt={alt} style={imageStyle}/> }
+                    { imageUrl && link && <a href={link} target={linkTarget} rel={linkRel}> { imageOutput } </a> }
+					{ imageUrl && (!link || isEditingLink) && imageOutput }
                     { isBlobURL(imageUrl) && <Spinner/> }
                     <MediaPlaceholder 
                         accept="image/*"
@@ -211,7 +296,7 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) { // 
                         notices={ noticeUI }
                     />
                 </div>
-                <div className="jc-blurb-info" ref={infoRef}>
+                <div className="jc-blurb-info">
                     <InnerBlocks
                         allowedBlocks={ ['core/paragraph', 'core/list'] } 
                         templateLock ={ allowBlocks ? false : 'all' }

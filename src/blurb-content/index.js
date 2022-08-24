@@ -29,12 +29,21 @@ registerBlockType('jc-blocks/blurb-content', {
 			attribute: 'alt',
 			default: ''
 		},
-        href: {
+        link: {
+			type: 'string',
+		
+		},
+		linkTarget: {
 			type: 'string',
 			source: 'attribute',
-			selector: 'jc-blurb-image>a',
-			attribute: 'alt',
-			default: ''
+			selector: '.jc-blurb-image>a',
+			attribute: 'target'
+		},
+		linkRel: {
+			type: "string",
+			source: 'attribute',
+			selector: '.jc-blurb-image>a',
+			attribute: 'rel'
 		},
         imageAlign: {
 			type: 'string',
