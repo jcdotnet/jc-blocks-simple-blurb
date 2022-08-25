@@ -10,6 +10,7 @@
 	"textdomain": "jc-simple-blurb",
 	"supports": {
 		"align": ["wide"],
+		"anchor": true,
 		"color": {
 			"__experimentalSkipSerialization": true,
 			"gradients": true,
