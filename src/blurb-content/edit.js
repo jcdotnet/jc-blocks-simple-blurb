@@ -114,9 +114,15 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 	useEffect( () => {
 		if ( isTemporaryImage(imageId, imageUrl) ) {
 			removeImage();
+		}
+	}, [] );
+
+	useEffect( () => {
+		if (isBlobURL(imageUrl)) {
 			setTemporaryURL( imageUrl );
 			return;
-		} else if (imageUrl) imageRef.current?.focus();
+		} 
+		else if (imageUrl) imageRef.current?.focus();
 		
 		revokeBlobURL( temporaryURL );
 	}, [ imageUrl ] );
