@@ -226,7 +226,7 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 					<MediaReplaceFlow
 						name={__('Replace Image', 'jc-simple-blurb')}
 						mediaId={imageId}
-						mediaUrl={imageUrl}
+						mediaURL={imageUrl}
 						accept="image/*"
 						allowedTypes={ ['image'] }
 						onSelect={onImageSelect} 
