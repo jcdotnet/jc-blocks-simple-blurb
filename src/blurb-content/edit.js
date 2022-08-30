@@ -2,6 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames';
+import { map, filter } from 'lodash';
 
  /**
  * WordPress dependencies
@@ -16,6 +17,7 @@ import {
 	BlockControls, 
 	MediaReplaceFlow, 
 	InspectorControls,
+	store as blockEditorStore,
 	__experimentalImageSizeControl as ImageSizeControl,
 	__experimentalLinkControl as LinkControl,
 	__experimentalUseColorProps as useColorProps,
@@ -36,6 +38,11 @@ import { useEffect, useState, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { link as linkIcon, linkOff, image as icon } from '@wordpress/icons';
 
+const getImageSourceUrlBySizeSlug = ( image, slug ) => {
+	// eslint-disable-next-line camelcase
+	return image?.media_details?.sizes?.[ slug ]?.source_url;
+}
+
 /**
  * Is the URL a temporary blob URL? A blob URL is one that is used temporarily
  * while the image is being uploaded and will not have an id yet allocated.
@@ -49,7 +56,7 @@ const isTemporaryImage = ( id, url ) => ! id && isBlobURL( url );
 
 function Edit( { attributes, setAttributes, isSelected, noticeOperations, noticeUI } ) { // we get the noticeOperations and the noticeUI props from the withNotices higher-order component
 
-    const {imageId, imageUrl, alt, link, linkTarget, linkRel, width, height, imageAlign, imageHasEffect, maxWidth, allowBlocks } = attributes;
+    const {imageId, imageUrl, imageSlug, alt, link, linkTarget, linkRel, width, height, imageAlign, imageHasEffect, maxWidth, allowBlocks } = attributes;
 
     // BLURB content (main element)
     const classes = classnames( 'jc-blurb-content', {
@@ -82,6 +89,18 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 
 	const imageRef = useRef();
 	
+	const imageSizes = useSelect( ( select ) => {
+		const settings = select( blockEditorStore ).getSettings();
+		return settings?.imageSizes;
+	}, [] );
+	
+	const imageSizeOptions = map(
+		filter( imageSizes, ( { slug } ) =>		
+			getImageSourceUrlBySizeSlug( image, slug )
+		),
+		( { name, slug } ) => ( { value: slug, label: name } )
+	);
+
 	const onAltChange = (alt) => {
 		setAttributes({alt: alt})
 	}
@@ -92,10 +111,18 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 	
 	const onImageSelect = (media) => {
 		if ( ! media || ! media.url ) {
-			removeImage();
+			deleteImage();
 			return;
 		}
-		setAttributes({imageId: media.id, imageUrl: media.url, alt: media.alt});
+		setAttributes({imageId: media.id, imageUrl: media.url, alt: media.alt, imageSlug: 'full'});
+	}
+	
+	const onURLSelect = (url) => {
+		setAttributes( {
+			imageId: undefined,
+			imageUrl: url,
+			alt: '',
+		} );
 	}
 
 	const onUploadError = ( message ) => {
@@ -103,7 +130,7 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 		noticeOperations.createErrorNotice( message );
 	}
 
-	const removeImage = () => {
+	const deleteImage = () => {
 		setAttributes( {
 			imageId: undefined,
 			imageUrl: undefined,
@@ -113,7 +140,7 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 
 	useEffect( () => {
 		if ( isTemporaryImage(imageId, imageUrl) ) {
-			removeImage();
+			deleteImage();
 		}
 	}, [] );
 
@@ -204,10 +231,13 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 						/>
 						<ImageSizeControl
 							onChange={ ( value ) => setAttributes( value ) }
+							onChangeImage = { (slug) => setAttributes({imageUrl: getImageSourceUrlBySizeSlug( image, slug ), imageSlug: slug})}
+							slug={ imageSlug }
 							width={ width }
 							height={ height }
 							imageWidth={ (image && image.media_details && image.media_details.width) || undefined } 
 							imageHeight={ (image && image.media_details && image.media_details.height) || undefined }
+							imageSizeOptions={ imageSizeOptions }
 						/>			
 					</PanelBody>
 				}
@@ -230,7 +260,7 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 						accept="image/*"
 						allowedTypes={ ['image'] }
 						onSelect={onImageSelect} 
-						onSelectURL={(url) => {setAttributes({imageId: undefined, imageUrl: url, alt: ''})}}
+						onSelectURL={onURLSelect}
 						onError={onUploadError}
 					/>
 					<AlignmentControl
@@ -261,7 +291,7 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 					<ToolbarButton 
 						icon="trash"
 						label={__('Remove Image', 'jc-simple-blurb')}
-						onClick={removeImage}
+						onClick={deleteImage}
 					/>
 				</BlockControls>
 			}
@@ -296,7 +326,7 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
                         allowedTypes={ ['image'] }
                         icon={<BlockIcon icon={ icon }/>} 
                         onSelect={onImageSelect} 
-                        onSelectURL={(url) => {setAttributes({imageId: undefined, imageUrl: url, alt: ''})}}
+                        onSelectURL={onURLSelect}
                         onError={onUploadError}
                         disableMediaButtons={ imageUrl }
                         notices={ noticeUI }

@@ -22,6 +22,10 @@ registerBlockType('jc-blocks/blurb-content', {
 			selector: 'img',
 			attribute: 'src'
 		},
+		imageSlug: {
+			type: 'string',
+			default: 'full'
+		},
         alt: {
 			type: 'string',
 			source: 'attribute',
