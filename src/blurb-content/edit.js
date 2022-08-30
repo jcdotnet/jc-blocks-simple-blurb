@@ -149,7 +149,7 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 			setTemporaryURL( imageUrl );
 			return;
 		} 
-		else if (imageUrl) imageRef.current?.focus();
+		else if (imageUrl) imageRef.current?.getElementsByTagName('img')[0]?.focus();
 		
 		revokeBlobURL( temporaryURL );
 	}, [ imageUrl ] );
@@ -182,7 +182,7 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 	const imageStyle= {
 		width, height
 	}
-	const imageOutput = <img ref={imageRef} src={imageUrl} alt={alt} style={imageStyle}/>;
+	const imageOutput = <img src={imageUrl} alt={alt} tabIndex="0" style={imageStyle}/>;
 
     return (
 		<>
@@ -300,7 +300,7 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 					position="bottom center"
 					onClose={ () => {
 						setIsEditingLink( false );
-						imageRef.current?.focus();
+						imageRef.current?.getElementsByTagName('img')[0]?.focus();
 					}}
 					anchorRef={ imageRef?.current }
 				>
@@ -310,15 +310,15 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 							onChange={ (value) => setAttributes({link:value.url, linkTarget: value.opensInNewTab ? '_blank' : undefined }) }
 							onRemove={ () => {
 								unlink();
-								imageRef.current?.focus();
+								imageRef.current?.getElementsByTagName('img')[0]?.focus();
 							} }
 							forceIsEditingLink={ isEditingLink }
 						/>
 				</Popover>
 			}
 			<div {...blockProps}>
-                <div className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' : ''}`}>
-                    { imageUrl && link && <a href={link} target={linkTarget} rel={linkRel}> { imageOutput } </a> }
+                <div ref={imageRef} className={`jc-blurb-image${isBlobURL(imageUrl) ? ' is-image-loading' : ''}`}>
+                    { imageUrl && link && !isEditingLink && <a href={link} target={linkTarget} rel={linkRel}> { imageOutput } </a> }
 					{ imageUrl && (!link || isEditingLink) && imageOutput }
                     { isBlobURL(imageUrl) && <Spinner/> }
                     <MediaPlaceholder 
