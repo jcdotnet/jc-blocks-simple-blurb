@@ -149,7 +149,7 @@ function Edit( { attributes, setAttributes, isSelected, noticeOperations, notice
 			setTemporaryURL( imageUrl );
 			return;
 		} 
-		else if (imageUrl) imageRef.current?.getElementsByTagName('img')[0]?.focus();
+		// else if (imageUrl) imageRef.current?.getElementsByTagName('img')[0]?.focus();
 		
 		revokeBlobURL( temporaryURL );
 	}, [ imageUrl ] );
