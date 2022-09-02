@@ -1,39 +1,34 @@
-=== Jc Simple Blurb ===
-Contributors:      The WordPress Contributors
-Tags:              block
-Tested up to:      5.9
-Stable tag:        0.1.0
+=== Simple Blurb for Gutenberg ===
+Contributors:      jcrr
+Tags:              block, gutenberg, blurb, image, text, information
+Tested up to:      6.0
+Stable tag:        1.0.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Example static block scaffolded with Create Block tool.
+Adds a Gutenberg block that showcases a short piece of information.
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
+This plugin will allow you to add a blurb from the WordPress block editor. 
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+Blurbs are a great way to inform your visitors about important content of your website by using a image, a title and a description.
+
+For the title and the description we use built-in Gutenberg blocks.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+1. Upload the plugin files to the `/wp-content/plugins/jc-blocks-simple-blurb` directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress
+3. Once the plugin has been activated, a new block called 'Simple Blurb' will appear in the block inserter.  
 
-e.g.
+= Features =
 
-1. Upload the plugin files to the `/wp-content/plugins/jc-simple-blurb` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
-
-
-== Frequently Asked Questions ==
-
-= A question that someone might have =
-
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
+- Alignments: you will able to align the blurb content, the image, the title and the description from the block toolbar 
+- Image top animation: enable a smooth top animation from the settings sidebar
+- New blocks in the description: enable the ability to add new blocks (paragraphs and list) from the settings toolbar.
+- Customization: This plugin offer fields to set the blurb maximum width, color, padding, etc. 
+- This is just a simple blurb. If people use it and like it, new interesting features will be added! 
 
 == Screenshots ==
 
@@ -43,11 +38,5 @@ Answer to foo bar dilemma.
 
 == Changelog ==
 
-= 0.1.0 =
-* Release
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above. This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation." Arbitrary sections will be shown below the built-in sections outlined above.
+= 1.0.0 =
+* Plugin release.

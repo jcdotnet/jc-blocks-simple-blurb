@@ -1,8 +1,8 @@
 {
 	"name": "simple-blurb",
-	"version": "0.1.0",
-	"description": "Example static block scaffolded with Create Block tool.",
-	"author": "The WordPress Contributors",
+	"version": "1.0.0",
+	"description": "Gutenberg block that showcases a short piece of information.",
+	"author": "JC, The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
