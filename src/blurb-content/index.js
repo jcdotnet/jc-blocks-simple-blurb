@@ -57,6 +57,12 @@ registerBlockType('jc-blocks/blurb-content', {
             type: 'bool',
             default: false
         },
+		width: {
+			type: 'number'
+		},
+		height: {
+			type: 'number'
+		},
         maxWidth: {
             type: 'string',
         },

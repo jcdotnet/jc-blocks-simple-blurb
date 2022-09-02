@@ -20,7 +20,7 @@ registerBlockType('jc-blocks/simple-blurb', {
 					mediaType: 'image',
 					imageUrl: 'https://josecarlosroman.com/wp-content/uploads/2022/09/simple-blurb-image.jpg',
 					maxWidth: '50%',
-					width: 50, // 
+					width: 70 
 				},
 				innerBlocks: [
 					{
