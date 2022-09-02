@@ -18,7 +18,7 @@ registerBlockType('jc-blocks/simple-blurb', {
 				name: 'jc-blocks/blurb-content',
 				attributes: {
 					mediaType: 'image',
-					imageUrl: 'https://josecarlosroman.com/wp-content/uploads/2022/09/simple-blurb-image.jpg',
+					imageUrl: 'https://josecarlosroman.com/wp-content/uploads/2022/09/simple-blurb-image.png',
 					maxWidth: '50%',
 					width: 70 
 				},

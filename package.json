@@ -1,10 +1,11 @@
 {
-	"name": "simple-blurb",
+	"name": "jc-blocks-simple-blurb",
 	"version": "1.0.0",
 	"description": "Gutenberg block that showcases a short piece of information.",
 	"author": "JC, The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
+	"files": [ "*.php", "build/*" ],
 	"scripts": {
 		"build": "wp-scripts build",
 		"format": "wp-scripts format",
@@ -15,9 +16,9 @@
 		"start": "wp-scripts start"
 	},
 	"devDependencies": {
-		"@wordpress/blob": "^3.15.0",
-		"@wordpress/icons": "^9.6.0",
-		"@wordpress/scripts": "^22.3.0",
+		"@wordpress/blob": "^3.16.0",
+		"@wordpress/icons": "^9.7.0",
+		"@wordpress/scripts": "^24.0.0",
 		"classnames": "^2.3.1"
 	}
 }

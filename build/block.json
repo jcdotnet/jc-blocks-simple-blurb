@@ -1,32 +1,38 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "jc-blocks/simple-blurb",
-	"version": "0.1.0",
-	"title": "Simple Blurb",
-	"category": "media",
-	"description": "Add a simple blurb to showcase a short piece of information.",
-	"keywords": [ "image", "text", "blurb" ],
-	"textdomain": "jc-simple-blurb",
-	"supports": {
-		"align": ["wide"],
-		"anchor": true,
-		"color": {
-			"__experimentalSkipSerialization": true,
-			"gradients": true,
-			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true
-			}
-		},
-		"spacing": {
-			"padding": true,
-			"margin": true
-		},
-		"html": false
-	},
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
-	"script": "file:./script.js",
-	"style": "file:./style-index.css"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "jc-blocks/simple-blurb",
+  "version": "0.1.0",
+  "title": "Simple Blurb",
+  "category": "media",
+  "description": "Add a simple blurb to showcase a short piece of information.",
+  "keywords": [
+    "image",
+    "text",
+    "blurb"
+  ],
+  "textdomain": "jc-simple-blurb",
+  "supports": {
+    "align": [
+      "wide"
+    ],
+    "anchor": true,
+    "color": {
+      "__experimentalSkipSerialization": true,
+      "gradients": true,
+      "__experimentalDefaultControls": {
+        "background": true,
+        "text": true
+      }
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    },
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "script": "file:./script.js",
+  "style": "file:./style-index.css"
 }
