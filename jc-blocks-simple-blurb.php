@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Simple Blurb for Gutenberg
+ * Plugin Name:       Simple Blurb
  * Description:       This plugin adds a Gutenberg block that showcases a short piece of information.
  * Requires at least: 5.9
  * Requires PHP:      7.0

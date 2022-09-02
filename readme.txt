@@ -1,4 +1,4 @@
-=== Simple Blurb for Gutenberg ===
+=== Simple Blurb ===
 Contributors:      jcrr
 Tags:              block, gutenberg, blurb, image, text, information
 Tested up to:      6.0
